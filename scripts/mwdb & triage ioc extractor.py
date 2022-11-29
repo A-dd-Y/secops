@@ -91,6 +91,7 @@ def mwdb():
         return remove(hash_array)
 
     def getC2():
+        c2_array_raw = []
         for i in hash_array:
             url = "https://virus.exchange/api/file/"
             uri = url + i
