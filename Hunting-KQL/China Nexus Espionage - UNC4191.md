@@ -1,5 +1,7 @@
 See [China-Nexus- UNC4191](https://www.mandiant.com/resources/blog/china-nexus-espionage-southeast-asia)
 
+##### Mandiant Managed Defense recently identified cyber espionage activity that heavily leverages USB devices as an initial infection vector and concentrates on the Philippines. Mandiant tracks this activity as UNC4191 and Mandiant assess it has a China nexus. UNC4191 operations have affected a range of public and private sector entities primarily in Southeast Asia and extending to the U.S., Europe, and APJ; however, even when targeted organizations were based in other locations, the specific systems targeted by UNC4191 were also found to be physically located in the Philippines.
+
 #### MDE Hunting Query
 
 #
