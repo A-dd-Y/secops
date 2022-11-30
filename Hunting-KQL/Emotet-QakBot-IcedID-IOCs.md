@@ -11,6 +11,8 @@
 ##### IOC Update : Weekly
 ##### Caution : It's an auto IOC collection with API and may contain False Positives. !!
 
+#
+
 ##### SHA256 Query
 
 ```kql
@@ -52,3 +54,4 @@ union (git | join (AlertEvidence | where isnotempty(RemoteUrl)) on RemoteUrl),(g
 | summarize uniqueCount = count() by RemoteUrl
 | sort by uniqueCount
 ```
+#
