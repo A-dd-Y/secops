@@ -1,4 +1,4 @@
-### source : MWDB / Triage
+### source : mwdb / triage
 
 #### #emotet, #qakbot, #icedid
 
