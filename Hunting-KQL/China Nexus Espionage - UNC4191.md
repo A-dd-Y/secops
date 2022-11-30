@@ -2,13 +2,13 @@ See [China-Nexus- UNC4191](https://www.mandiant.com/resources/blog/china-nexus-e
 
 ##### Mandiant Managed Defense recently identified cyber espionage activity that heavily leverages USB devices as an initial infection vector and concentrates on the Philippines. Mandiant tracks this activity as UNC4191 and Mandiant assess it has a China nexus. UNC4191 operations have affected a range of public and private sector entities primarily in Southeast Asia and extending to the U.S., Europe, and APJ; however, even when targeted organizations were based in other locations, the specific systems targeted by UNC4191 were also found to be physically located in the Philippines.
 
-#### MDE Hunting Query
+#### MDE KQL Hunting Query
 
 #
 
 #### China-Nexus IOC Hunting
 
-```kusto
+```kql
 search in (AlertEvidence, DeviceEvents, DeviceFileEvents, DeviceImageLoadEvents, DeviceProcessEvents)
 Timestamp > now(-30d)
 | where SHA1 has_any ("3f1cb1bef6bff56e5fcfbc03c3bbff6e45f2826a","2dd2e2fd578d64461e89f70cf85224c36fb3a442","8b8ba74b785c6c7441dbd1b90fff580771121cd4",
@@ -19,14 +19,14 @@ or MD5 has_any ("7753da1d7466f251b60673841a97ac5a","c10abb9f88f485d38e25bc5a0e75
 | summarize count()
 ```
 
-```kusto
+```kql
 search in (AlertEvidence, DeviceEvents, DeviceNetworkEvents)
 Timestamp > now(-30d)
 | where RemoteUrl contains "theworkpc.com"
 | summarize count()
 ```
 
-```kusto
+```kql
 search in (AlertEvidence, DeviceEvents, DeviceFileEvents,DeviceImageLoadEvents,DeviceProcessEvents)
 Timestamp > now(-30d)
 | where FolderPath contains @"C:\ProgramData\udisk" or FolderPath contains @"C:\Users\Public\Libraries\CNNUDTV"
@@ -39,7 +39,7 @@ Timestamp > now(-30d)
 
 ##### The attacker use initial infection via USB devices, the threat actor leveraged legitimately signed binaries to side-load malware, including three new families Mandiant refer to as MISTCLOAK, DARKDEW, and BLUEHAZE. Successful compromise led to the deployment of a renamed NCAT binary and execution of a reverse shell on the victim’s system, providing backdoor access to the threat actor. The malware self-replicates by infecting new removable drives that are plugged into a compromised system, allowing the malicious payloads to propagate to additional systems and potentially collect data from air-gapped systems.
 
-```kusto
+```kql
 search in (AlertEvidence, DeviceEvents, DeviceProcessEvents)
 Timestamp > now(-30d)
 | where (ProcessCommandLine contains "nltest /domain_trusts /all_Trusts" or ProcessCommandLine contains "net group \"Domain Admins\" /domain" or ProcessCommandLine contains "net group \"Administrators\"")
@@ -50,7 +50,7 @@ or (ProcessCommandLine contains "/C wuwebv.exe -t -e " and ProcessCommandLine co
 | summarize CmdLine = count() by ProcessCommandLine | sort by CmdLine
 ```
 
-```kusto
+```kql
 search in (DeviceEvents,DeviceFileEvents,DeviceImageLoadEvents,DeviceLogonEvents,DeviceNetworkEvents,DeviceProcessEvents,DeviceRegistryEvents)
 Timestamp > now(-30d)
 | where (InitiatingProcessCommandLine contains "nltest /domain_trusts /all_Trusts" or InitiatingProcessCommandLine contains "net group \"Domain Admins\" /domain" or InitiatingProcessCommandLine contains "net group \"Administrators\"")
@@ -62,7 +62,7 @@ or (InitiatingProcessCommandLine contains "/C wuwebv.exe -t -e " and InitiatingP
 ```
 
 
-```kusto
+```kql
 search in (DeviceEvents,DeviceFileEvents,DeviceImageLoadEvents,DeviceLogonEvents,DeviceNetworkEvents,DeviceProcessEvents,DeviceRegistryEvents)
 Timestamp > now(-30d)
 | where InitiatingProcessFolderPath contains @"C:\Users\Public\Libraries\"
@@ -70,7 +70,7 @@ Timestamp > now(-30d)
 ```
 
 
-```kusto
+```kql
 search in (DeviceEvents,DeviceFileEvents,DeviceImageLoadEvents,DeviceLogonEvents,DeviceNetworkEvents,DeviceProcessEvents,DeviceRegistryEvents)
 Timestamp > now(-30d)
 | where (InitiatingProcessFolderPath contains @"D:\" and ProcessCommandLine contains @"\autorun.inf\")
