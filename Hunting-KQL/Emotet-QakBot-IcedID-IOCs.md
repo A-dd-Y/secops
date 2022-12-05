@@ -33,7 +33,7 @@ union (git | join (AlertEvidence | where isnotempty(SHA256)) on SHA256),(git | j
 ```kql
 let git = materialize(externaldata(RemoteIP:string, RemotePort:string)
     [@"https://raw.githubusercontent.com/A-dd-Y/secops/main/MalwareIOC/C2.txt"]
-    with (format="txt", ignoreFirstRecord=true)
+    with (format="txt", ignoreFirstRecord=false)
 );
 union (git | join (AlertEvidence | where isnotempty(RemoteIP)) on RemoteIP),(git | join (DeviceEvents | where isnotempty(RemoteIP)) on RemoteIP),
 (git | join (DeviceNetworkEvents | where isnotempty(RemoteIP)) on RemoteIP),(git | join (DeviceLogonEvents | where isnotempty(RemoteIP)) on RemoteIP)
@@ -45,7 +45,7 @@ union (git | join (AlertEvidence | where isnotempty(RemoteIP)) on RemoteIP),(git
 ```kql
 let git = materialize(externaldata(RemoteUrl:string, RemotePort:string)
     [@"https://raw.githubusercontent.com/A-dd-Y/secops/main/MalwareIOC/C2.txt"]
-    with (format="txt", ignoreFirstRecord=true)
+    with (format="txt", ignoreFirstRecord=false)
 );
 union (git | join (AlertEvidence | where isnotempty(RemoteUrl)) on RemoteUrl),(git | join (DeviceEvents | where isnotempty(RemoteUrl)) on RemoteUrl),
 (git | join (DeviceNetworkEvents | where isnotempty(RemoteUrl)) on RemoteUrl)
